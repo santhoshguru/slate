@@ -1,189 +1,372 @@
 ---
-title: API Reference
+title: HappyFox Chat - API Reference
 
 language_tabs:
-  - shell
-  - ruby
-  - python
   - javascript
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
   - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
-includes:
-  - errors
-
 search: true
 ---
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+<p class="top-spacing">HappyFox Chat's JavaScript API provides you more control over the chat widget. You can customize the widget behavior programmatically.</p>
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+# Onload
 
-This example API documentation page was created with [Slate](https://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
-
-# Authentication
-
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-```
-
-```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
-```
+> to listen onload, use this code
 
 ```javascript
-const kittn = require('kittn');
+HFCHAT_CONFIG.onload = function() {
 
-let api = kittn.authorize('meowmeowmeow');
+ var HappyFoxChat = this;
+
+};
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
-
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
-
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
+<p class="top-spacing"> All API methods should be called only after the script is loaded.</p>
 
 <aside class="notice">
-You must replace <code>meowmeowmeow</code> with your personal API key.
+  You can, add your HappyFox Chat api related code with in the `onload` function
 </aside>
 
-# Kittens
 
-## Get All Kittens
+# Set Visitor Information
 
-```ruby
-require 'kittn'
+> to set visitor information, use this code
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
+```javascript
+HappyFoxChat.setVisitorInfo(<visitorInfoObject>, <callback>);
 ```
 
-```python
-import kittn
+> Example
 
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get()
+```javascript
+HappyFoxChat.setVisitorInfo({
+ 'name': 'Bob',
+ 'email': 'bubblybob@gmail.com'
+}, function(err, resp) {
+ /**
+  * err  -> Incase of failure this will have error object
+  * resp -> Passed visitor info object (Here: { 'name': 'Bob', 'email': 'bubblybob@gmail.com' })
+  */
+ if(err) {
+  console.error('Failed to set visitor details. Error:', err);
+ } else {
+  console.log('Added visitor details:', resp);
+ }
+});
 ```
 
-```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
+<p class="top-spacing">Available visitor info fields:</p>
+
+- name
+- email
+
+# Get Visitor Information
+
+> To get visitor information, use this code
+
+```javascript
+HappyFoxChat.getVisitorInfo(<callback>);
+```
+
+> Example
+
+```javascript
+HappyFoxChat.getVisitorInfo(function(err, resp) {
+ /**
+  * err  -> Incase of failure this will have error object
+  * resp -> Visitor Info object (Example: { 'name': 'Bob', 'email': 'bubblybob@gmail.com' })
+  */
+ if(err) {
+  console.error('Failed to set visitor details. Error:', err);
+ } else {
+  console.log('Got visitor info:', resp);
+ }
+});
+```
+
+<p class="top-spacing"> Available visitor info fields:</p>
+
+- name
+- email
+
+# Unset Visitor
+
+> to unset visitor, use this code
+
+```javascript
+HappyFoxChat.unsetVisitor(<callback>);
+```
+
+> Example
+
+```javascript
+HappyFoxChat.unsetVisitor(function(err) {
+ if (err) {
+  console.error('Failed to reset the visitor. Error:', err);
+ } else {
+  console.log('Visitor reset successful');  
+ }
+});
+```
+
+<aside class="notice">
+  This will force the widget to forget the visitor.
+</aside>
+
+# Set Custom Field Value
+
+> To Set Custom Field Value, use this code
+
+```javascript
+HappyFoxChat.setCustomFields(<customFieldObject>, <callback>);
+```
+
+> Example
+
+```javascript
+HappyFoxChat.setCustomFields({
+ 'Account Number': '1234567890',
+ 'Branch': 'CA',
+ 'Type': 'Free'
+}, function(err, resp) {
+ /**
+  * err  -> Incase of failure this will have error object
+  * resp -> Passed custom field object (Here: { 'Account Number': '1234567890', 'Branch': 'CA', 'Type': 'Free'})
+  */
+ if(err) {
+  console.error('Failed to add given properties to custom fields. Error:', err);
+ } else {
+  console.log('Added custom field properties:', resp);
+ }
+});
+```
+
+> To Unset Custom Field Value, use this code
+
+```javascript
+HappyFoxChat.unsetCustomFields(["<customFieldName>", "<customFieldName>", ... ], <callback>);
 ```
 
 ```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let kittens = api.kittens.get();
+HappyFoxChat.unsetCustomFields({
+ 'Account Number',
+ 'Branch'
+}, function(err, resp) {
+ /**
+  * err  -> Incase of failure this will have error object
+  */
+ if(err) {
+  console.error('Failed to unset given custom field values. Error:', err);
+ } else {
+  console.log('Successfully unset custom fields');
+ }
+});
 ```
 
-> The above command returns JSON structured like this:
+# Get Custom Field
 
-```json
-[
-  {
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-  },
-  {
-    "id": 2,
-    "name": "Max",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
+> To Get Custom Field, use this code
+
+```javascript
+HappyFoxChat.getCustomField("<customFieldName>", <callback>);
+```
+
+> Example
+
+```javascript
+HappyFoxChat.getCustomField("Type", function (err, value) {
+ /**
+  * err  -> Incase of failure this will have error object
+  */
+ if(err) {
+  console.error('Failed to unset given custom field values. Error:', err);
+ } else {
+  console.log('Successfully got custom field value. Value:', value);
+ }
+});
+```
+
+# Add Custom Styles
+
+> To Add Custom Styles, use this code
+
+```javascript
+HappyFoxChat.addCustomStyles(<customStyle>);
+```
+
+> Example
+
+```javascript
+HappyFoxChat.addCustomStyles('.hfc-title-text { color: #0000FF !important; } .hfc-title-bar { background-color: #00FF00 !important; }', function(err) {
+ /**
+  * err  -> Incase of failure this will have error object
+  */
+  if (err) {
+    console.error('Failed to add custom styles. Error:', err);
+  } else {
+    console.log('Added custom styles');
   }
-]
+});
 ```
 
-This endpoint retrieves all kittens.
+# Add Custom CSS File
 
-### HTTP Request
-
-`GET http://example.com/api/kittens`
-
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-Remember — a happy kitten is an authenticated kitten!
-</aside>
-
-## Get a Specific Kitten
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```python
-import kittn
-
-api = kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
-
-```shell
-curl "http://example.com/api/kittens/2"
-  -H "Authorization: meowmeowmeow"
-```
+> To Add Custom Styles, use this code
 
 ```javascript
-const kittn = require('kittn');
-
-let api = kittn.authorize('meowmeowmeow');
-let max = api.kittens.get(2);
+HappyFoxChat.addCustomCSSFile(<customCSSFileUrl>);
 ```
 
-> The above command returns JSON structured like this:
+> Example
 
-```json
-{
-  "id": 2,
-  "name": "Max",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
-}
+```javascript
+HappyFoxChat.addCustomCSSFile('http://mydomain.com/css/happyfoxchat-custom.css', function(err) {
+ /**
+  * err  -> Incase of failure this will have error object
+  */
+ if(err) {
+  console.error('Failed to add custom CSS file. Error:', err);
+ } else {
+  console.log('Added custom CSS file');
+ }
+});
 ```
 
-This endpoint retrieves a specific kitten.
+# Expand/Collapse Chatbox
 
-<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+> To Expand Chatbox, use this code
 
-### HTTP Request
+```javascript
+HappyFoxChat.expandChatbox(<callback>);
+```
 
-`GET http://example.com/kittens/<ID>`
+> To Collapse Chatbox, use this code
 
-### URL Parameters
+```javascript
+HappyFoxChat.collapseChatbox(<callback>);
+```
 
-Parameter | Description
---------- | -----------
-ID | The ID of the kitten to retrieve
+> Example
+
+```javascript
+HappyFoxChat.expandChatbox(function(err) {
+ /**
+  * err  -> Incase of failure this will have error object
+  */
+ if(err) {
+  console.error('Failed to expand chatbox. Error:', err);
+ } else {
+  console.log('Expanded chatbox');
+ }
+});
+```
+
+# Show/Hide Widget
+
+> To Show Widget, use this code
+
+```javascript
+HappyFoxChat.showWidget(<callback>);
+```
+
+> To Hide Widget, use this code
+
+```javascript
+HappyFoxChat.hideWidget(<callback>);
+```
+
+# Show/Hide Badge:
+
+> To Show Badge, use this code
+
+```javascript
+HappyFoxChat.showBadge(<callback>);
+```
+
+> To Hide Badge, use this code
+
+```javascript
+HappyFoxChat.hideBadge(<callback>);
+```
+
+# Get Agents Availability
+
+> To Get Agents Availability, use this code
+
+```javascript
+HappyFoxChat.getAgentsAvailability(function (err, agentsAvailability) {
+  ...
+});
+```
+
+# Get Visitor State
+
+> Get Visitor State, use this code
+
+```javascript
+HappyFoxChat.getVisitorState(function (err, visitorState) {
+  ...
+  visitorState can be "passive"/"waiting_for_agent"/"chattting"
+});
+```
+
+# Get Proactive Message
+
+> to Get Proactive Message, use this code
+
+```javascript
+HappyFoxChat.getProactiveMessage(function (err, proactiveMessage) {
+  ...
+});
+```
+
+# Get Widget Properties
+
+> to Get Widget Properties, use this code
+
+```javascript
+HappyFoxChat.getWidgetProperties(function (err, widgetProperties) {
+  ...
+});
+```
+
+# Events
+
+> Example
+
+```javascript
+HappyFoxChat.on('click:badge', function () {
+  console.log('Chat with us badge clicked');
+});
+```
+
+<p class="top-spacing"> You can listen to events via SDK </p>
+
+**Supported Events:**
+
+- `click:badge`
+- `start:chat`
+- `end:chat`
+- `join:agent`
+- `leave:agent`
+- `change:agents_availability`
+- `activate:triggered_chat`
+- `received:proactive_message`
+- `submitted:rating`
+- `change:visitor_state`
+
+
+
+
+
+
+
+
+
 

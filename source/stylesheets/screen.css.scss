@@ -334,7 +334,7 @@ html, body {
     clear: both;
   }
 
-  &>h1, &>h2, &>h3, &>h4, &>h5, &>h6, &>p, &>table, &>ul, &>ol, &>aside, &>dl {
+  &>h1, &>h2, &>h3, &>h4, &>h5, &>h6, &>p, &>table, &>ul, &>ol, &>aside, &>dl, .content-wrap {
     margin-right: $examples-width;
     padding: 0 $main-padding;
     box-sizing: border-box;
@@ -561,6 +561,33 @@ html, body {
     }
   }
 }
+
+/* custom style */
+
+.logo-ct {
+  width: 50px;
+  margin: 20px auto 0 auto;
+  
+  img {
+    @extend .res-image;
+  }
+}
+
+.res-image {
+  max-width: 100%;
+  height: auto;
+}
+
+.content h1 {
+  margin-bottom: 0;
+}
+
+.top-spacing,
+.content p.top-spacing {
+  margin-top: 21px;
+}
+
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // RESPONSIVE DESIGN
