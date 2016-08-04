@@ -13,10 +13,6 @@ search: true
 
 # Introduction
 
-<p class="top-spacing">HappyFox Chat's JavaScript API provides you more control over the chat widget. You can customize the widget behavior programmatically.</p>
-
-# Onload
-
 > to listen onload, use this code
 
 ```javascript
@@ -27,7 +23,9 @@ HFCHAT_CONFIG.onload = function() {
 };
 ```
 
-<p class="top-spacing"> All API methods should be called only after the script is loaded.</p>
+<p class="top-spacing">HappyFox Chat's JavaScript API provides you more control over the chat widget. You can customize the widget behavior programmatically.</p>
+
+<p > All API methods should be called only after the script is loaded.</p>
 
 <aside class="notice">
   You can, add your HappyFox Chat api related code with in the `onload` function
