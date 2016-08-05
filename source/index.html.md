@@ -40,6 +40,11 @@ HFCHAT_CONFIG.onload = function() {
 HappyFoxChat.setVisitorInfo(<visitorInfoObject>, <callback>);
 ```
 
+<blockquote>
+ <p>&lt;visitorInfo[Object]&gt; should have two mandatory properties name and email.</p>
+</blockquote>
+
+
 > Example
 
 ```javascript
@@ -58,8 +63,9 @@ HappyFoxChat.setVisitorInfo({
  }
 });
 ```
+<p class="top-spacing">If you already know the visitor's name and email, you can simply call the below API to pass those details, instead of asking your visitor to fill the pre-chat form.</p>
 
-<p class="top-spacing">Available visitor info fields:</p>
+<p>Available visitor info fields:</p>
 
 - name
 - email
@@ -113,6 +119,8 @@ HappyFoxChat.unsetVisitor(function(err) {
 });
 ```
 
+<p class="top-spacing">If you want to clear the details, when your visitor logs off, you can call the below API to clear the pre-filled data.</p>
+
 <aside class="notice">
   This will force the widget to forget the visitor.
 </aside>
@@ -124,6 +132,10 @@ HappyFoxChat.unsetVisitor(function(err) {
 ```javascript
 HappyFoxChat.setCustomFields(<customFieldObject>, <callback>);
 ```
+
+<blockquote>
+ <p>&lt;customField[Object]&gt; should have properties <a href="https://support.happyfoxchat.com/kb/article/420-how-to-send-more-info-about-visitors-to-happyfox-chat" target="_blank">defined inside HappyFox Chat</a>.
+</blockquote>
 
 > Example
 
@@ -166,6 +178,8 @@ HappyFoxChat.unsetCustomFields({
  }
 });
 ```
+
+<p class="top-spacing">The <a href="https://support.happyfoxchat.com/kb/article/483-customizing-chat-widget-using-javascript-api?_ga=1.146945136.657137493.1436768824" target="_blank">custom field</a> is a way to pass more data about visitors from your website to HappyFox Chat without any action needed from them. You can send details using the API mentioned below.</p>
 
 # Get Custom Field
 
@@ -212,6 +226,8 @@ HappyFoxChat.addCustomStyles('.hfc-title-text { color: #0000FF !important; } .hf
   }
 });
 ```
+
+<p class="top-spacing">To make CSS customization or to change the style of the widget, use the below API.</p>
 
 # Add Custom CSS File
 
