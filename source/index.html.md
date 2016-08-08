@@ -2,18 +2,17 @@
 title: HappyFox Chat - API Reference
 
 language_tabs:
-  - javascript
+  - JavaScript
 
 toc_footers:
   - <a href='#'>Sign Up for a Developer Key</a>
   - <a href='https://github.com/tripit/slate'>Documentation Powered by Slate</a>
-
-search: true
+  - 
 ---
 
 # Introduction
 
-> to listen onload, use this code
+> All API methods should be called on the onLoad event
 
 ```javascript
 HFCHAT_CONFIG.onload = function() {
@@ -32,9 +31,9 @@ HFCHAT_CONFIG.onload = function() {
 </aside>
 
 
-# Set Visitor Information
+# Set Visitor Info
 
-> to set visitor information, use this code
+> Syntax - setVisitorInfo
 
 ```javascript
 HappyFoxChat.setVisitorInfo(<visitorInfoObject>, <callback>);
@@ -45,17 +44,13 @@ HappyFoxChat.setVisitorInfo(<visitorInfoObject>, <callback>);
 </blockquote>
 
 
-> Example
+> Sample Code
 
 ```javascript
 HappyFoxChat.setVisitorInfo({
  'name': 'Bob',
  'email': 'bubblybob@gmail.com'
 }, function(err, resp) {
- /**
-  * err  -> Incase of failure this will have error object
-  * resp -> Passed visitor info object (Here: { 'name': 'Bob', 'email': 'bubblybob@gmail.com' })
-  */
  if(err) {
   console.error('Failed to set visitor details. Error:', err);
  } else {
@@ -63,29 +58,25 @@ HappyFoxChat.setVisitorInfo({
  }
 });
 ```
-<p class="top-spacing">If you already know the visitor's name and email, you can simply call the below API to pass those details, instead of asking your visitor to fill the pre-chat form.</p>
+<p class="top-spacing">You can send in your signed-in user's name and email by simply calling the setVisitorInfo method to pass those details. This is will skip the pre-chat form for the users.</p>
 
-<p>Available visitor info fields:</p>
+<p>Mandatory properties that needs to be set:</p>
 
 - name
 - email
 
-# Get Visitor Information
+# Get Visitor Info
 
-> To get visitor information, use this code
+> Syntax
 
 ```javascript
 HappyFoxChat.getVisitorInfo(<callback>);
 ```
 
-> Example
+> Sample Code
 
 ```javascript
 HappyFoxChat.getVisitorInfo(function(err, resp) {
- /**
-  * err  -> Incase of failure this will have error object
-  * resp -> Visitor Info object (Example: { 'name': 'Bob', 'email': 'bubblybob@gmail.com' })
-  */
  if(err) {
   console.error('Failed to set visitor details. Error:', err);
  } else {
@@ -94,20 +85,20 @@ HappyFoxChat.getVisitorInfo(function(err, resp) {
 });
 ```
 
-<p class="top-spacing"> Available visitor info fields:</p>
+<p class="top-spacing">Properties returned by this method:</p>
 
 - name
 - email
 
 # Unset Visitor
 
-> to unset visitor, use this code
+> Syntax
 
 ```javascript
 HappyFoxChat.unsetVisitor(<callback>);
 ```
 
-> Example
+> Sample Code
 
 ```javascript
 HappyFoxChat.unsetVisitor(function(err) {
@@ -119,15 +110,15 @@ HappyFoxChat.unsetVisitor(function(err) {
 });
 ```
 
-<p class="top-spacing">If you want to clear the details, when your visitor logs off, you can call the below API to clear the pre-filled data.</p>
+<p class="top-spacing">If you want to clear or unset the visitor details when your visitor logs off, you can call the method unsetVisitor API to clear the pre-filled data.</p>
 
 <aside class="notice">
-  This will force the widget to forget the visitor.
+  This will force the widget to forget the visitor. When your visitor wants to chat with you, he/she has to fill the pre-chat form with  name and email details.
 </aside>
 
-# Set Custom Field Value
+# Set Custom Fields
 
-> To Set Custom Field Value, use this code
+> Syntax - setCustomFields
 
 ```javascript
 HappyFoxChat.setCustomFields(<customFieldObject>, <callback>);
@@ -145,10 +136,6 @@ HappyFoxChat.setCustomFields({
  'Branch': 'CA',
  'Type': 'Free'
 }, function(err, resp) {
- /**
-  * err  -> Incase of failure this will have error object
-  * resp -> Passed custom field object (Here: { 'Account Number': '1234567890', 'Branch': 'CA', 'Type': 'Free'})
-  */
  if(err) {
   console.error('Failed to add given properties to custom fields. Error:', err);
  } else {
@@ -156,8 +143,13 @@ HappyFoxChat.setCustomFields({
  }
 });
 ```
+<p class="top-spacing">The <a href="https://support.happyfoxchat.com/kb/article/483-customizing-chat-widget-using-javascript-api?_ga=1.146945136.657137493.1436768824" target="_blank">custom field</a> is a way to pass more data about visitors from your website to HappyFox Chat without any action needed from them. You can send custom field data using setCustomFields method.</p>
 
-> To Unset Custom Field Value, use this code
+
+
+# Clear Custom Fields
+
+> Syntax - unsetCustomFields
 
 ```javascript
 HappyFoxChat.unsetCustomFields(["<customFieldName>", "<customFieldName>", ... ], <callback>);
@@ -168,9 +160,6 @@ HappyFoxChat.unsetCustomFields({
  'Account Number',
  'Branch'
 }, function(err, resp) {
- /**
-  * err  -> Incase of failure this will have error object
-  */
  if(err) {
   console.error('Failed to unset given custom field values. Error:', err);
  } else {
